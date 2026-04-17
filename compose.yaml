@@ -1,0 +1,7 @@
+services:
+  py-app:
+    build: .
+    image: py-app
+    container_name: py-app
+    ports:
+      - "8000:8000"
