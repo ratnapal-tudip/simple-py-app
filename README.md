@@ -3,8 +3,8 @@
 Clone the repository:
 
 ```
-git clone 
-cd 
+git clone https://github.com/ratnapal-tudip/simple-py-app.git
+cd simple-py-app
 ```
 
 Install dependencies:
