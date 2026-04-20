@@ -16,6 +16,15 @@ pipeline {
                 sh 'docker build -t py-app .'
             }
         }
+        
+        stage('Debug Credentials') {
+            steps {
+                withCredentials([file(credentialsId: 'gcp-key', variable: 'FILE')]) {
+                    sh 'ls -l $FILE'
+                }
+            }
+        }
+
 
         stage('Auth to GCP') {
             steps {
@@ -34,13 +43,6 @@ pipeline {
                 docker tag py-app $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE:latest
                 docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE:latest
                 '''
-            }
-        }
-        stage('Debug Credentials') {
-            steps {
-                withCredentials([file(credentialsId: 'gcp-key', variable: 'FILE')]) {
-                    sh 'ls -l $FILE'
-                }
             }
         }
 
