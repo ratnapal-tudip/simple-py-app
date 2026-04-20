@@ -36,6 +36,13 @@ pipeline {
                 '''
             }
         }
+        stage('Debug Credentials') {
+            steps {
+                withCredentials([file(credentialsId: 'gcp-key', variable: 'FILE')]) {
+                    sh 'ls -l $FILE'
+                }
+            }
+        }
 
         stage('Deploy to VM') {
             steps {
