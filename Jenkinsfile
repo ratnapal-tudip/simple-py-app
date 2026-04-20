@@ -16,7 +16,7 @@ pipeline {
                 sh 'docker build -t py-app .'
             }
         }
-        
+
         stage('Debug Credentials') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-key', variable: 'FILE')]) {
@@ -49,8 +49,8 @@ pipeline {
         stage('Deploy to VM') {
             steps {
                 sshagent(['vm-ssh-key']) {
-                    sh '''
-                    ssh -o StrictHostKeyChecking=no ratnapal@$VM_IP '
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ratnapal@$VM_IP "
                     
                     docker pull $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE:latest &&
                     
@@ -59,8 +59,9 @@ pipeline {
                     
                     docker run -d -p 80:8000 --name py-app \
                     $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE:latest
-                    '
-                    '''
+                    
+                    "
+                    """
                 }
             }
         }
